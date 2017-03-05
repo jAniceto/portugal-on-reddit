@@ -2,7 +2,7 @@ import praw
 import time
 
 
-expressions_to_monitor = "benefícios"
+expressions_to_monitor = ["sporting"]
 
 
 def authenticate():
@@ -17,8 +17,10 @@ def run_bot(reddit):
         title = submission.title  # Output: the submission's title
         # print(title)
 
-        if expressions_to_monitor in title.lower():
-            print(title)
+        for expression in expressions_to_monitor:
+            if expression in title.lower():
+                print(title)
+
 
     # Interval between runs
     time.sleep(10)
