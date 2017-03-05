@@ -1,8 +1,12 @@
 import praw
 import time
+import pprint
 
 
-expressions_to_monitor = ["sporting"]
+# expressions_to_monitor = ["portugal", "portuguese", "porto", "lisboa", "oporto", "lisbon"]
+expressions_to_monitor = ["portugal"]
+subreddits_to_monitor = "all"
+required_score = 100
 
 
 def authenticate():
@@ -13,22 +17,22 @@ def authenticate():
 
 
 def run_bot(reddit):
-    for submission in reddit.subreddit('portugal').hot(limit=25):
-        title = submission.title  # Output: the submission's title
-        # print(title)
+    submissions_number = 0
+    for expression in expressions_to_monitor:
+        search_query = 'title:' + expression
 
-        for expression in expressions_to_monitor:
-            if expression in title.lower():
-                print(title)
+        for submission in reddit.subreddit(subreddits_to_monitor).search(search_query, syntax='lucene', time_filter='week'):
+            # pprint.pprint(vars(submission))
+            if submission.score >= required_score:
+                title = submission.title  # Output the submission's title
+                print(title + '\n')
+                submissions_number += 1
 
-
-    # Interval between runs
-    time.sleep(10)
+    print(submissions_number)
 
 
 def main():
     reddit = authenticate()
-    # while True:
     run_bot(reddit)
 
 
