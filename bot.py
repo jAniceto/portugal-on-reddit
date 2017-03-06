@@ -6,7 +6,7 @@ import pprint
 # expressions_to_monitor = ["portugal", "portuguese", "porto", "lisboa", "oporto", "lisbon"]
 expressions_to_monitor = ["portugal"]
 subreddits_to_monitor = "all-portugal-PORTUGALCARALHO-PrimeiraLiga"
-required_score = 50
+required_score = 500
 
 
 def authenticate():
@@ -16,12 +16,12 @@ def authenticate():
     return reddit
 
 
-def run_bot(reddit):
+def start_subreddit(reddit):
     submissions_number = 0
     for expression in expressions_to_monitor:
         search_query = 'title:' + expression
 
-        for submission in reddit.subreddit(subreddits_to_monitor).search(search_query, syntax='lucene', time_filter='month'):
+        for submission in reddit.subreddit(subreddits_to_monitor).search(search_query, syntax='lucene', time_filter='year'):
             # pprint.pprint(vars(submission))
             if submission.score >= required_score:
                 title = submission.title  # Submission's title
@@ -50,7 +50,7 @@ def new_post(subreddit, title, url, text):
 
 def main():
     reddit = authenticate()
-    run_bot(reddit)
+    start_subreddit(reddit)
 
 
 if __name__ == '__main__':
