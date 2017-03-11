@@ -1,7 +1,8 @@
 # BOT CONFIGURATION OPTIONS
 
 # Expressions to monitor for:
-expressions_to_monitor = ['portugal', 'porto', 'oporto', 'lisboa', 'lisbon', 'psbattle']
+# expressions_to_monitor = ['portugal', 'porto', 'oporto', 'lisboa', 'lisbon']
+expressions_to_monitor = ['link']
 
 # Subreddits to monitor for (+ to monitor more multiple subreddits; - to exclude a subreddit):
 subreddits_to_monitor = 'all-portugal-PORTUGALCARALHO-PrimeiraLiga'
