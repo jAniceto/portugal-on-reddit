@@ -1,12 +1,7 @@
 import praw
+from config import *
 import time
 import pprint
-
-
-# expressions_to_monitor = ["portugal", "portuguese", "porto", "lisboa", "oporto", "lisbon"]
-expressions_to_monitor = ["portugal"]
-subreddits_to_monitor = "all-portugal-PORTUGALCARALHO-PrimeiraLiga"
-required_score = 500
 
 
 def authenticate():
@@ -43,14 +38,43 @@ def start_subreddit(reddit):
     print(str(submissions_number) + ' submissions found')
 
 
+def monitor(reddit):
+    for submission in reddit.subreddit(subreddits_to_monitor).hot(limit=10):
+    # for submission in reddit.subreddit(subreddits_to_monitor).stream.submissions():
+        # pprint.pprint(vars(submission))
+        for expression in expressions_to_monitor:
+            if expression in submission.title.lower():
+                # if submission.num_comments >= required_comments:
+                title = submission.title  # Submission's title
+                url = submission.url  # Submission's url
+                xpost = "[r/{}] ".format(submission.subreddit.display_name)  # x-post string: [subreddit]
+                comments_url = 'https://www.reddit.com' + submission.permalink  # link to submission's comment section
+
+                new_post_title = xpost + title
+                new_post_url = url
+                new_post_text = "[Link to original post here]({})".format(comments_url)
+                post_to = reddit.subreddit('PortugalOnReddit')
+
+                print(new_post_title + ' - ' + url + '\n' + comments_url + '\n')
+
+                #new_post(post_to, new_post_title, new_post_url, new_post_text)
+
+
 def new_post(subreddit, title, url, text):
     post = subreddit.submit(title, url=url)
     sticky_comment = post.reply(text).mod.distinguish(sticky=True)
+    return sticky_comment
 
 
 def main():
+    # Authentication
     reddit = authenticate()
-    start_subreddit(reddit)
+
+    # Setting up subreddit with some older posts
+    # start_subreddit(reddit)
+
+    # Monitor Reddit for new submissions
+    monitor(reddit)
 
 
 if __name__ == '__main__':
