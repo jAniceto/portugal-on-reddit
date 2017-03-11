@@ -1,14 +1,14 @@
 # BOT CONFIGURATION OPTIONS
 
+# Subreddit where the bot will post:
+SUBREDDIT_TO_POST = 'PortugalOnReddit'
+
 # Expressions to monitor for:
 # expressions_to_monitor = ['portugal', 'porto', 'oporto', 'lisboa', 'lisbon']
-expressions_to_monitor = ['link']
+EXPRESSIONS_TO_MONITOR = ['link']
 
 # Subreddits to monitor for (+ to monitor more multiple subreddits; - to exclude a subreddit):
-subreddits_to_monitor = 'all-portugal-PORTUGALCARALHO-PrimeiraLiga'
+SUBREDDITS_TO_MONITOR = 'all-portugal-PORTUGALCARALHO-PrimeiraLiga'
 
 # Required score to cross-post a submission found by search when setting up your subreddit:
-required_score = 500
-
-# Required number of comments to cross-post a submission:
-required_comments = 1000
+REQUIRED_SCORE = 500

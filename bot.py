@@ -1,7 +1,6 @@
+import time
 import praw
 from config import *
-import time
-import pprint
 
 
 def authenticate():
@@ -20,21 +19,20 @@ def process_submission(reddit, submission):
     new_post_title = xpost + title
     new_post_url = url
     new_post_text = "[Link to original post here]({})".format(comments_url)
-    post_to = reddit.subreddit('PortugalOnReddit')
+    post_to = reddit.subreddit(SUBREDDIT_TO_POST)
 
     # new_post(post_to, new_post_title, new_post_url, new_post_text)
-
     print(new_post_title + ' - ' + url + '\n' + comments_url + '\n')
 
 
 def start_subreddit(reddit):
     submissions_number = 0
-    for expression in expressions_to_monitor:
+    for expression in EXPRESSIONS_TO_MONITOR:
         search_query = 'title:' + expression
 
-        for submission in reddit.subreddit(subreddits_to_monitor).search(search_query, syntax='lucene', time_filter='year'):
+        for submission in reddit.subreddit(SUBREDDITS_TO_MONITOR).search(search_query, syntax='lucene', time_filter='year'):
             # pprint.pprint(vars(submission))
-            if submission.score >= required_score:
+            if submission.score >= REQUIRED_SCORE:
                 process_submission(reddit, submission)
                 submissions_number += 1
 
@@ -43,11 +41,16 @@ def start_subreddit(reddit):
 
 def monitor(reddit):
     # for submission in reddit.subreddit(subreddits_to_monitor).stream.submissions():
-    for submission in reddit.subreddit(subreddits_to_monitor).hot(limit=10):
+    for submission in reddit.subreddit(SUBREDDITS_TO_MONITOR).hot(limit=10):
         # pprint.pprint(vars(submission))
-        for expression in expressions_to_monitor:
+        for expression in EXPRESSIONS_TO_MONITOR:
             if expression in submission.title.lower():
                 process_submission(reddit, submission)
+
+                # Save submission so it doesn't repeat
+
+    # Sleep for 10 seconds
+    time.sleep(10)
 
 
 def new_post(subreddit, title, url, text):
@@ -64,7 +67,8 @@ def main():
     # start_subreddit(reddit)
 
     # Monitor Reddit for new submissions
-    monitor(reddit)
+    while True:
+        monitor(reddit)
 
 
 if __name__ == '__main__':
