@@ -1,4 +1,5 @@
 import time
+import os
 import praw
 from config import *
 
@@ -31,7 +32,6 @@ def start_subreddit(reddit):
         search_query = 'title:' + expression
 
         for submission in reddit.subreddit(SUBREDDITS_TO_MONITOR).search(search_query, syntax='lucene', time_filter='year'):
-            # pprint.pprint(vars(submission))
             if submission.score >= REQUIRED_SCORE:
                 process_submission(reddit, submission)
                 submissions_number += 1
@@ -39,24 +39,36 @@ def start_subreddit(reddit):
     print(str(submissions_number) + ' submissions found')
 
 
-def monitor(reddit):
-    # for submission in reddit.subreddit(subreddits_to_monitor).stream.submissions():
-    for submission in reddit.subreddit(SUBREDDITS_TO_MONITOR).hot(limit=10):
-        # pprint.pprint(vars(submission))
+def monitor(reddit, submissions_found):
+    for submission in reddit.subreddit(SUBREDDITS_TO_MONITOR).hot(limit=100):
         for expression in EXPRESSIONS_TO_MONITOR:
-            if expression in submission.title.lower():
+            if expression in submission.title.lower() and submission.id not in submissions_found:
                 process_submission(reddit, submission)
+                submissions_found.append(submission.id)
 
-                # Save submission so it doesn't repeat
+                with open('submissions_processed.txt', 'a') as f:
+                    f.write(submission.id + '\n')
 
-    # Sleep for 10 seconds
-    time.sleep(10)
+    # Sleep for a few seconds
+    print('Waiting...\n')
+    time.sleep(5*60)
 
 
 def new_post(subreddit, title, url, text):
     post = subreddit.submit(title, url=url)
     sticky_comment = post.reply(text).mod.distinguish(sticky=True)
     return sticky_comment
+
+
+def get_submissions_processed():
+    if not os.path.isfile('submissions_processed.txt'):
+        submissions_processed = []
+    else:
+        with open('submissions_processed.txt', 'r') as f:
+            submissions_processed = f.read()
+            submissions_processed = submissions_processed.split('\n')
+
+    return submissions_processed
 
 
 def main():
@@ -67,8 +79,9 @@ def main():
     # start_subreddit(reddit)
 
     # Monitor Reddit for new submissions
+    submissions_found = get_submissions_processed()
     while True:
-        monitor(reddit)
+        monitor(reddit, submissions_found)
 
 
 if __name__ == '__main__':

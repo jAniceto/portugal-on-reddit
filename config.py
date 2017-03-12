@@ -4,8 +4,8 @@
 SUBREDDIT_TO_POST = 'PortugalOnReddit'
 
 # Expressions to monitor for:
-# expressions_to_monitor = ['portugal', 'porto', 'oporto', 'lisboa', 'lisbon']
-EXPRESSIONS_TO_MONITOR = ['link']
+EXPRESSIONS_TO_MONITOR = ['portugal', 'porto', 'oporto', 'lisboa', 'lisbon']
+# EXPRESSIONS_TO_MONITOR = ['national']
 
 # Subreddits to monitor for (+ to monitor more multiple subreddits; - to exclude a subreddit):
 SUBREDDITS_TO_MONITOR = 'all-portugal-PORTUGALCARALHO-PrimeiraLiga'
