@@ -40,18 +40,24 @@ def start_subreddit(reddit):
 
 
 def monitor(reddit, submissions_found):
-    for submission in reddit.subreddit(SUBREDDITS_TO_MONITOR).hot(limit=100):
+    counter = 0
+    for submission in reddit.subreddit(SUBREDDITS_TO_MONITOR).hot(limit=SEARCH_LIMIT):
         for expression in EXPRESSIONS_TO_MONITOR:
             if expression in submission.title.lower() and submission.id not in submissions_found:
                 process_submission(reddit, submission)
                 submissions_found.append(submission.id)
+                counter += 1
 
                 with open('submissions_processed.txt', 'a') as f:
                     f.write(submission.id + '\n')
 
+    # Log results
+    t = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
+    print(t + ': ' + str(counter) + ' submission(s) found')
+
     # Sleep for a few seconds
-    print('Waiting...\n')
-    time.sleep(5*60)
+    print('Waiting...')
+    time.sleep(WAIT_TIME*60)
 
 
 def new_post(subreddit, title, url, text):
