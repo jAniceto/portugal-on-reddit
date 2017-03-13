@@ -91,3 +91,4 @@ ENV/
 # Rope project settings
 .ropeproject
 praw.ini
+submissions_processed.txt

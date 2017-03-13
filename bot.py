@@ -6,7 +6,7 @@ from config import *
 
 def authenticate():
     print("Authenticating...")
-    reddit = praw.Reddit('PortugalOnReddit', user_agent='PortugalOnReddit v0.1')
+    reddit = praw.Reddit('PortugalOnReddit', user_agent=USER_AGENT)
     print("Authenticated as {}".format(reddit.user.me()))
     return reddit
 
@@ -14,7 +14,7 @@ def authenticate():
 def process_submission(reddit, submission):
     title = submission.title  # Submission's title
     url = submission.url  # Submission's url
-    xpost = "[{}] ".format(submission.subreddit.display_name)  # x-post string: [subreddit]
+    xpost = "[r/{}] ".format(submission.subreddit.display_name)  # x-post string: [r/subreddit]
     comments_url = 'https://www.reddit.com' + submission.permalink  # link to submission's comment section
 
     new_post_title = xpost + title
@@ -22,8 +22,8 @@ def process_submission(reddit, submission):
     new_post_text = "[Link to original post here]({})".format(comments_url)
     post_to = reddit.subreddit(SUBREDDIT_TO_POST)
 
-    # new_post(post_to, new_post_title, new_post_url, new_post_text)
-    print(new_post_title + ' - ' + url + '\n' + comments_url + '\n')
+    new_post(post_to, new_post_title, new_post_url, new_post_text)
+    print(new_post_title + ' - ' + comments_url)
 
 
 def start_subreddit(reddit):
