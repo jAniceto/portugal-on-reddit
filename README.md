@@ -7,7 +7,7 @@ You can easily configure the bot to create a similar subreddit for your country.
 2. Edit the appropriate variables in config.py
 3. Pass your Reddit app credentials and account logging to the authenticate function. You can do this by creating a praw.ini file in the same directory of bot.py with the following format:
 ```
-[PortugalOnReddit]
+[OnReddit]
 client_id=YOUR_CLIENT_ID
 client_secret=YOUR_CLIENT_SECRET
 password=YOUR_REDDIT_ACCOUNT_PASSWORD
@@ -23,5 +23,5 @@ python bot.py
 
 `delete_posts` if anything goes wrong you can clean up your new subreddit. Removes all submissions.
 
-##### To be added
-* Statistics
+##### To do
+* Add statistics
