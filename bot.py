@@ -6,7 +6,7 @@ from config import *
 
 def authenticate():
     print("Authenticating...")
-    reddit = praw.Reddit('PortugalOnReddit', user_agent=USER_AGENT)
+    reddit = praw.Reddit('OnReddit', user_agent=USER_AGENT)
     print("Authenticated as {}".format(reddit.user.me()))
     return reddit
 
@@ -24,19 +24,6 @@ def process_submission(reddit, submission):
 
     new_post(post_to, new_post_title, new_post_url, new_post_text)
     print(new_post_title + ' - ' + comments_url)
-
-
-def start_subreddit(reddit):
-    submissions_number = 0
-    for expression in EXPRESSIONS_TO_MONITOR:
-        search_query = 'title:' + expression
-
-        for submission in reddit.subreddit(SUBREDDITS_TO_MONITOR).search(search_query, syntax='lucene', time_filter='year'):
-            if submission.score >= REQUIRED_SCORE:
-                process_submission(reddit, submission)
-                submissions_number += 1
-
-    print(str(submissions_number) + ' submissions found')
 
 
 def monitor(reddit, submissions_found):
@@ -80,9 +67,6 @@ def get_submissions_processed():
 def main():
     # Authentication
     reddit = authenticate()
-
-    # Setting up subreddit with some older posts
-    # start_subreddit(reddit)
 
     # Monitor Reddit for new submissions
     submissions_found = get_submissions_processed()
