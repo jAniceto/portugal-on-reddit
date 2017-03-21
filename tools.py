@@ -1,6 +1,10 @@
 import praw
 from bot import process_submission
 from config import *
+import sys
+from collections import defaultdict
+import pprint
+import matplotlib.pyplot as plt
 
 
 def authenticate():
@@ -34,6 +38,43 @@ def delete_posts(reddit):
     print(i)
 
 
-if __name__ == '__main__':
-    reddit = authenticate()
+def stats(reddit):
+    source_subreddit_list = []
+    for submission in reddit.subreddit('PortugalOnReddit').hot(limit=None):
+        title = submission.title
+
+        try:
+            source_subreddit = title.split('[')[1].split(']')[0]
+        except IndexError:
+            continue
+
+        if source_subreddit[0:2] == 'r/':
+            source_subreddit = source_subreddit[2:]
+
+        source_subreddit_list.append(source_subreddit)
+
+    # print(source_subreddit_list)
+
+    appearances = defaultdict(int)
+
+    for curr in source_subreddit_list:
+            appearances[curr] += 1
+
+    pprint.pprint(appearances)
+
+    # Make plots
+    plt.bar(range(len(appearances)), appearances.values(), align='center')
+    # plt.xticks(range(len(appearances)), appearances.keys())
+    plt.xticks(range(len(appearances)), list(appearances.keys()), rotation='vertical')
+    plt.show()
+
+
+tool = sys.argv[1]
+
+reddit = authenticate()
+if tool == "start":
+    start_subreddit(reddit)
+elif tool == "delete":
     delete_posts(reddit)
+elif tool == "stats":
+    stats(reddit)
