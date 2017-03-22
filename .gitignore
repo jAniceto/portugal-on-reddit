@@ -92,3 +92,5 @@ ENV/
 .ropeproject
 praw.ini
 submissions_processed.txt
+notas.txt
+submissions_processed2.txt
