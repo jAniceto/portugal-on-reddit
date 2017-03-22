@@ -62,12 +62,29 @@ def stats(reddit):
 
     pprint.pprint(appearances)
 
-    # Make plots
-    plt.bar(range(len(appearances)), appearances.values(), align='center')
-    # plt.xticks(range(len(appearances)), appearances.keys())
-    plt.xticks(range(len(appearances)), list(appearances.keys()), rotation='vertical')
-    plt.show()
+    # PLOTS
+    # plt.rcdefaults()
+    # fig, ax = plt.subplots()
 
+    # Bar chart
+    plt.figure(1)
+    plt.bar(range(len(appearances)), appearances.values(), align='center')
+    plt.xticks(range(len(appearances)), list(appearances.keys()), rotation='vertical')
+    plt.ylabel('Number of submissions')
+    plt.title('Mentions per subreddit')
+
+    # Horizontal bar chart
+    plt.figure(2)
+    plt.barh(range(len(appearances)), appearances.values(), align='center', color='green')
+    plt.yticks(range(len(appearances)), list(appearances.keys()))
+    plt.xlabel('Number of submissions')
+    plt.title('Mentions per subreddit')
+
+    # Pie chart
+    plt.figure(3)
+    plt.pie(list(appearances.values()), labels=list(appearances.keys()), autopct='%1.1f%%')
+
+    plt.show()
 
 tool = sys.argv[1]
 
