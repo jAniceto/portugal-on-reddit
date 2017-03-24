@@ -1,5 +1,8 @@
 .idea/
 notas.txt
+praw.ini
+submissions_processed.txt
+stats/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -90,5 +93,3 @@ ENV/
 
 # Rope project settings
 .ropeproject
-praw.ini
-submissions_processed.txt

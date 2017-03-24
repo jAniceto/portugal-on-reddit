@@ -53,19 +53,23 @@ def stats(reddit):
 
         source_subreddit_list.append(source_subreddit)
 
-    # print(source_subreddit_list)
-
     appearances = defaultdict(int)
 
     for curr in source_subreddit_list:
             appearances[curr] += 1
 
-    pprint.pprint(appearances)
+    # Treat data
+    appearances_summary = {'others': 0}
+    for subreddit_key in appearances:
+        if appearances[subreddit_key] == 1:
+            appearances_summary['others'] += 1
+        else:
+            appearances_summary[subreddit_key] = appearances[subreddit_key]
+
+    pprint.pprint(appearances_summary)
+    appearances = appearances_summary  # use treated data for stats
 
     # PLOTS
-    # plt.rcdefaults()
-    # fig, ax = plt.subplots()
-
     # Bar chart
     plt.figure(1)
     plt.bar(range(len(appearances)), appearances.values(), align='center')
@@ -86,7 +90,10 @@ def stats(reddit):
 
     plt.show()
 
-tool = sys.argv[1]
+try:
+    tool = sys.argv[1]
+except IndexError:
+    tool = "stats"
 
 reddit = authenticate()
 if tool == "start":
