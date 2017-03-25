@@ -1,7 +1,7 @@
 # BOT CONFIGURATION OPTIONS
 
 # Bot user agent
-USER_AGENT = 'PortugalOnReddit bot by u/Synergix'
+USER_AGENT = 'A bot that runs r/PortugalOnReddit. Created by u/Synergix'
 
 # Subreddit where the bot will post
 SUBREDDIT_TO_POST = 'PortugalOnReddit'
