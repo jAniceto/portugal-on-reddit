@@ -43,12 +43,10 @@ def monitor(reddit, submissions_found):
                 with open('submissions_processed.txt', 'a') as f:
                     f.write(submission.id + '\n')
 
-    # Log results
-    t = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
-    logging.info(t + ': ' + str(counter) + ' submission(s) found')
+    logging.info(str(counter) + ' submission(s) found')  # log results
 
     # Sleep for a few seconds
-    logging.info('Waiting...')
+    logging.info('Waiting...')  # log results
     time.sleep(WAIT_TIME*60)
 
 
