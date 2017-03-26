@@ -1,13 +1,18 @@
 import time
 import os
+import logging
 import praw
 from config import *
 
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+# logging.disable(logging.CRITICAL)
+
+
 def authenticate():
-    print("Authenticating...")
+    logging.info("Authenticating...")
     reddit = praw.Reddit('OnReddit', user_agent=USER_AGENT)
-    print("Authenticated as {}".format(reddit.user.me()))
+    logging.info("Authenticated as {}".format(reddit.user.me()))
     return reddit
 
 
@@ -23,7 +28,7 @@ def process_submission(reddit, submission):
     post_to = reddit.subreddit(SUBREDDIT_TO_POST)
 
     new_post(post_to, new_post_title, new_post_url, new_post_text)
-    print(new_post_title + ' - ' + comments_url)
+    logging.info(new_post_title + ' - ' + comments_url)
 
 
 def monitor(reddit, submissions_found):
@@ -40,10 +45,10 @@ def monitor(reddit, submissions_found):
 
     # Log results
     t = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
-    print(t + ': ' + str(counter) + ' submission(s) found')
+    logging.info(t + ': ' + str(counter) + ' submission(s) found')
 
     # Sleep for a few seconds
-    print('Waiting...')
+    logging.info('Waiting...')
     time.sleep(WAIT_TIME*60)
 
 
@@ -65,6 +70,8 @@ def get_submissions_processed():
 
 
 def main():
+    print('Reddit bot running...')
+
     # Authentication
     reddit = authenticate()
 
@@ -74,7 +81,7 @@ def main():
         try:
             monitor(reddit, submissions_found)
         except Exception as e:
-            print("Random exception occurred: {}".format(e))
+            logging.warning("Random exception occurred: {}".format(e))
             time.sleep(WAIT_TIME * 60)
 
 
