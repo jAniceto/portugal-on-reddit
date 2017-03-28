@@ -10,7 +10,7 @@ SUBREDDIT_TO_POST = 'PortugalOnReddit'
 EXPRESSIONS_TO_MONITOR = ['portugal', 'portuguese']
 
 # Subreddits to monitor for (+ to monitor multiple subreddits; - to exclude a subreddit)
-SUBREDDITS_TO_MONITOR = 'all-portugal-PORTUGALCARALHO-PrimeiraLiga'
+SUBREDDITS_TO_MONITOR = 'all-PortugalOnReddit-portugal-PORTUGALCARALHO-PrimeiraLiga'
 
 # Number of submissions to check in each run
 SEARCH_LIMIT = 8000

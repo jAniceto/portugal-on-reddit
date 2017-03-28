@@ -5,7 +5,7 @@ import praw
 from config import *
 
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(asctime)s - %(message)s')
 # logging.disable(logging.CRITICAL)
 
 
@@ -45,7 +45,7 @@ def monitor(reddit, submissions_found):
 
     logging.info(str(counter) + ' submission(s) found')  # log results
 
-    # Sleep for a few seconds
+    # Sleep for a few minutes
     logging.info('Waiting...')  # log results
     time.sleep(WAIT_TIME*60)
 
