@@ -19,9 +19,15 @@ python bot.py
 ```
 
 ### Other tools
-`start_subreddit` allows you to set up your new subreddit with up to 100 submissions to get things started. It uses Reddit search function to get post with a minimum score of `REQUIRED_SCORE` as defined in config.py.
+A few usefull tools are available to help manage your new subreddit. They are:
 
-`delete_posts` if anything goes wrong you can clean up your new subreddit. Removes all submissions.
+`start_subreddit` allows you to set up your new subreddit with up to 100 submissions to get things started. It uses Reddit search function to get posts with a minimum score of `REQUIRED_SCORE` as defined in config.py.
 
-##### To do
-* Add statistics
+`delete_posts` removes all submissions. If anything goes wrong you can clean up your new subreddit.
+
+`stats` gives a few stats
+
+For example, to get your subreddit stats do this:
+```
+python tools.py stats
+```
