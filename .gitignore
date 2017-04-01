@@ -3,6 +3,7 @@ notas.txt
 praw.ini
 submissions_processed.txt
 stats/
+todo.md
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
