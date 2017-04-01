@@ -23,12 +23,20 @@ def process_submission(reddit, submission):
     comments_url = 'https://www.reddit.com' + submission.permalink  # link to submission's comment section
 
     new_post_title = xpost + title
+    if submission.over_18:
+        new_post_title += ' | NSFW'
     new_post_url = url
     new_post_text = "[Link to original post here]({})".format(comments_url)
     post_to = reddit.subreddit(SUBREDDIT_TO_POST)
 
     new_post(post_to, new_post_title, new_post_url, new_post_text)
     logging.info(new_post_title + ' - ' + comments_url)
+
+
+def new_post(subreddit, title, url, text):
+    post = subreddit.submit(title, url=url)
+    sticky_comment = post.reply(text).mod.distinguish(sticky=True)
+    return sticky_comment
 
 
 def monitor(reddit, submissions_found):
@@ -48,12 +56,6 @@ def monitor(reddit, submissions_found):
     # Sleep for a few minutes
     logging.info('Waiting...')  # log results
     time.sleep(WAIT_TIME*60)
-
-
-def new_post(subreddit, title, url, text):
-    post = subreddit.submit(title, url=url)
-    sticky_comment = post.reply(text).mod.distinguish(sticky=True)
-    return sticky_comment
 
 
 def get_submissions_processed():
