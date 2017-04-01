@@ -20,23 +20,29 @@ def process_submission(reddit, submission):
     title = submission.title  # Submission's title
     url = submission.url  # Submission's url
     xpost = "[r/{}] ".format(submission.subreddit.display_name)  # x-post string: [r/subreddit]
-    comments_url = 'https://www.reddit.com' + submission.permalink  # link to submission's comment section
+    source_url = 'https://www.reddit.com' + submission.permalink  # link to submission's comment section
 
     new_post_title = xpost + title
     if submission.over_18:
         new_post_title += ' | NSFW'
     new_post_url = url
-    new_post_text = "[Link to original post here]({})".format(comments_url)
     post_to = reddit.subreddit(SUBREDDIT_TO_POST)
 
-    new_post(post_to, new_post_title, new_post_url, new_post_text)
-    logging.info(new_post_title + ' - ' + comments_url)
+    new_post(post_to, new_post_title, new_post_url, source_url)
+    logging.info(new_post_title)
 
 
-def new_post(subreddit, title, url, text):
-    post = subreddit.submit(title, url=url)
-    sticky_comment = post.reply(text).mod.distinguish(sticky=True)
-    return sticky_comment
+def new_post(subreddit, title, url, source_url):
+    if POST_MODE == 'direct':
+        post = subreddit.submit(title, url=url)
+        comment_text = "[Link to original post here]({})".format(source_url)
+        post.reply(comment_text).mod.distinguish(sticky=True)
+
+    elif POST_MODE == 'comment':
+        subreddit.submit(title, url=source_url)
+
+    else:
+        logging.ERROR('Invalid POST_MODE chosen. Select "direct" or "comment"')
 
 
 def monitor(reddit, submissions_found):
