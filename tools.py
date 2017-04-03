@@ -1,10 +1,20 @@
+# External libraries
 import praw
+from collections import defaultdict
+import matplotlib.pyplot as plt
+
+# Standard libraries
+import sys
+import pprint
+import operator
+
+# From portugal-on-reddit
 from bot import process_submission
 from config import *
-import sys
-from collections import defaultdict
-import pprint
-import matplotlib.pyplot as plt
+
+
+# Matplotlib style
+plt.style.use('ggplot')
 
 
 def authenticate():
@@ -66,27 +76,29 @@ def stats(reddit):
         else:
             appearances_summary[subreddit_key] = appearances[subreddit_key]
 
-    pprint.pprint(appearances_summary)
-    appearances = appearances_summary  # use treated data for stats
+    # sorted_appearances = sorted(appearances_summary.items())
+    sorted_appearances = sorted(appearances_summary.items(), key=operator.itemgetter(1))
+    source_label, submission_number = zip(*sorted_appearances)
+    pprint.pprint(sorted_appearances)
 
     # PLOTS
     # Bar chart
     plt.figure(1)
-    plt.bar(range(len(appearances)), appearances.values(), align='center')
-    plt.xticks(range(len(appearances)), list(appearances.keys()), rotation='vertical')
+    plt.bar(range(len(submission_number)), list(submission_number), align='center')
+    plt.xticks(range(len(source_label)), list(source_label), rotation='vertical')
     plt.ylabel('Number of submissions')
     plt.title('Mentions per subreddit')
 
     # Horizontal bar chart
     plt.figure(2)
-    plt.barh(range(len(appearances)), appearances.values(), align='center', color='green')
-    plt.yticks(range(len(appearances)), list(appearances.keys()))
+    plt.barh(range(len(submission_number)), list(submission_number), align='center')
+    plt.yticks(range(len(source_label)), list(source_label))
     plt.xlabel('Number of submissions')
     plt.title('Mentions per subreddit')
 
     # Pie chart
     plt.figure(3)
-    plt.pie(list(appearances.values()), labels=list(appearances.keys()), autopct='%1.1f%%')
+    plt.pie(list(submission_number), labels=list(source_label), autopct='%1.1f%%')
 
     plt.show()
 
