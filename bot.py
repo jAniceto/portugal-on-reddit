@@ -42,7 +42,7 @@ def new_post(subreddit, title, url, source_url):
         subreddit.submit(title, url=source_url)
 
     else:
-        logging.ERROR('Invalid POST_MODE chosen. Select "direct" or "comment"')
+        logging.ERROR('Invalid POST_MODE chosen. Select "direct" or "comment".')
 
 
 def monitor(reddit, submissions_found):
