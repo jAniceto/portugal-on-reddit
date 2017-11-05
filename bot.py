@@ -1,11 +1,16 @@
+# External libraries
+import praw
+
+# Standard libraries
 import time
 import os
 import logging
-import praw
+
+# From portugal-on-reddit
 from config import *
 
 
-logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(asctime)s - %(message)s')
+logging.basicConfig(filename='log.txt', level=logging.INFO, format='%(levelname)s: %(asctime)s - %(message)s')
 # logging.disable(logging.CRITICAL)
 
 
