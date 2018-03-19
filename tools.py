@@ -66,12 +66,12 @@ def stats(reddit):
     appearances = defaultdict(int)
 
     for curr in source_subreddit_list:
-            appearances[curr] += 1
+        appearances[curr] += 1
 
     # Treat data
     appearances_summary = {'others': 0}
     for subreddit_key in appearances:
-        if appearances[subreddit_key] == 1:
+        if appearances[subreddit_key] <= 4:
             appearances_summary['others'] += 1
         else:
             appearances_summary[subreddit_key] = appearances[subreddit_key]
