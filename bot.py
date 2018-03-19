@@ -1,5 +1,6 @@
 # External libraries
 import praw
+from googletrans import Translator
 
 # Standard libraries
 import time
@@ -26,6 +27,14 @@ def process_submission(reddit, submission):
     url = submission.url  # Submission's url
     xpost = "[r/{}] ".format(submission.subreddit.display_name)  # x-post string: [r/subreddit]
     source_url = 'https://www.reddit.com' + submission.permalink  # link to submission's comment section
+
+    # Translate title if not in PT or EN
+    for expression in EXPRESSIONS_TO_MONITOR[2:]:
+        if expression in title.lower():
+            translator = Translator()
+            title_translation = translator.translate(title)
+            title = title_translation.text + ' | Translated from {}'.format(title_translation.src.upper())
+            break
 
     new_post_title = xpost + title
     if submission.over_18:

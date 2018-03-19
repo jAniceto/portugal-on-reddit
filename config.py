@@ -7,7 +7,9 @@ USER_AGENT = 'A bot that runs r/PortugalOnReddit. Created by u/Synergix'
 SUBREDDIT_TO_POST = 'PortugalOnReddit'
 
 # Expressions to monitor for
-EXPRESSIONS_TO_MONITOR = ['portugal', 'portuguese']
+EXPRESSIONS_TO_MONITOR = ['portugal', 'portuguese', 'português', 'portogallo', 'portugali', 'portugalia', 'Португалия', 'ポルトガル', '葡萄牙',
+                          'portugisiska', 'portugalski', 'portoghese', 'portugais', 'portugués', '葡萄牙語', 'португальский',
+                          'portugiesisch', 'portugisisk', 'portugees', 'ポルトガル語']
 
 # Subreddits to monitor for (+ to monitor multiple subreddits; - to exclude a subreddit)
 SUBREDDITS_TO_MONITOR = 'all-PortugalOnReddit-portugal-PORTUGALCARALHO-PrimeiraLiga-portugaltheman-PortugalGoneWild'
