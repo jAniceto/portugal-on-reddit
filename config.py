@@ -17,9 +17,6 @@ SUBREDDITS_TO_MONITOR = 'all-PortugalOnReddit-portugal-PORTUGALCARALHO-PrimeiraL
 # Number of submissions to check in each run
 SEARCH_LIMIT = 8000
 
-# Wait time between runs (in minutes)
-WAIT_TIME = 15
-
 # Post mode (choose 'direct' or 'comment')
 # 'direct' will make the bot post the direct link of the source submission
 # 'comment' will make the bot post the link to the comment section of the source submission
