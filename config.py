@@ -24,3 +24,6 @@ POST_MODE = 'comment'
 
 # Required score to cross-post a submission found by search when setting up your subreddit
 REQUIRED_SCORE = 500
+
+# Location
+BOT_PATH = '/path/to/file/portugal-on-reddit/'
