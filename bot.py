@@ -3,6 +3,7 @@ import praw
 from googletrans import Translator
 
 # Standard libraries
+import time
 import os
 import logging
 
@@ -72,6 +73,10 @@ def monitor(reddit, submissions_found):
 
     logging.info(str(counter) + ' submission(s) found')  # log results
 
+    # Sleep for a few minutes
+    logging.info('Waiting...')  # log results
+    time.sleep(WAIT_TIME*60)
+
 
 def get_submissions_processed():
     if not os.path.isfile('submissions_processed.txt'):
@@ -92,11 +97,12 @@ def main():
 
     # Monitor Reddit for new submissions
     submissions_found = get_submissions_processed()
-    
-    try:
-        monitor(reddit, submissions_found)
-    except Exception as e:
-        logging.warning("Random exception occurred: {}".format(e))
+    while True:
+        try:
+            monitor(reddit, submissions_found)
+        except Exception as e:
+            logging.warning("Random exception occurred: {}".format(e))
+            time.sleep(WAIT_TIME * 60)
 
 
 if __name__ == '__main__':
