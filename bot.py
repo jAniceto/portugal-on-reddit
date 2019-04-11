@@ -10,7 +10,7 @@ import logging
 from config import *
 
 
-logging.basicConfig(filename=os.path.join(BOT_PATH, 'log.txt'), level=logging.INFO, format='%(levelname)s: %(asctime)s - %(message)s')
+logging.basicConfig(filename='log.txt', level=logging.INFO, format='%(levelname)s: %(asctime)s - %(message)s')
 # logging.disable(logging.CRITICAL)
 
 
@@ -67,17 +67,17 @@ def monitor(reddit, submissions_found):
                 submissions_found.append(submission.id)
                 counter += 1
 
-                with open(os.path.join(BOT_PATH, 'submissions_processed.txt'), 'a') as f:
+                with open('submissions_processed.txt', 'a') as f:
                     f.write(submission.id + '\n')
 
     logging.info(str(counter) + ' submission(s) found')  # log results
 
 
 def get_submissions_processed():
-    if not os.path.isfile(os.path.join(BOT_PATH, 'submissions_processed.txt')):
+    if not os.path.isfile('submissions_processed.txt'):
         submissions_processed = []
     else:
-        with open(os.path.join(BOT_PATH, 'submissions_processed.txt'), 'r') as f:
+        with open('submissions_processed.txt', 'r') as f:
             submissions_processed = f.read()
             submissions_processed = submissions_processed.split('\n')
 

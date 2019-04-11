@@ -15,21 +15,8 @@ username=YOUR_REDDIT_ACCOUNT_USERNAME
 ```
 4. Run bot:
 ```
-python3 bot.py
+python bot.py
 ```
-
-#### To run it automatically use `cron`
-
-```
-cd /
-sudo crontab -e
-```
-
-For example, to run the bot every 15 minutes set the following job:
-```
-*/15 * * * * python3 /path/to/file/bot.py
-```
-
 
 ### Other tools
 A few usefull tools are available to help manage your new subreddit. They are:
@@ -42,5 +29,5 @@ A few usefull tools are available to help manage your new subreddit. They are:
 
 For example, to get your subreddit stats do this:
 ```
-python3 tools.py stats
+python tools.py stats
 ```
