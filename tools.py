@@ -50,7 +50,7 @@ def delete_posts(reddit):
 
 def stats(reddit):
     source_subreddit_list = []
-    for submission in reddit.subreddit('PortugalOnReddit').hot(limit=None):
+    for submission in reddit.subreddit('PortugalOnReddit').new(limit=None):
         title = submission.title
 
         try:
